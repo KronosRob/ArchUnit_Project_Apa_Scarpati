@@ -16,7 +16,7 @@ Steps using the shell:
 1. Clone the repository (`git clone https://github.com/KronosRob/ArchUnit_Project_Apa_Scarpati.git` or download and extract zip archive);
 2. Go inside the project directory;
 3. Use Maven in order to execute all tests (`mvn test`);
-4. Use Maven in order to see all metrics values for all components (`mvn exec:java -Dexec.classpathScope="test"`)
+4. Use Maven in order to see all metrics values for all components (`mvn test-compile exec:java`)
 
 
 Steps using IntelliJ:
