@@ -5,7 +5,7 @@ With this project we want to show how to use ArchUnit to test some architectural
 All test classes concerning the architectural level are located in src/test/java/alexp/blog/arch.
 
 
-#Installation
+# Installation
 
 Requirements:
 - JDK 8
