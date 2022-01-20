@@ -1,6 +1,8 @@
 package alexp.blog.service;
 
-public class AlreadyVotedException extends Exception {
+import alexp.blog.exception.ValidationError;
+
+public class AlreadyVotedException extends Exception implements ValidationError {
 
     public AlreadyVotedException(String message) {
         super(message);

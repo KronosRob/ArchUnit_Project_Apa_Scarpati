@@ -16,6 +16,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -55,6 +58,15 @@ public class PostsController {
     @RequestMapping(value = {"/posts/top"}, method = RequestMethod.GET, headers="Accept=application/json", produces = "application/json;charset=UTF-8")
     public @ResponseBody String getTopPostsList() {
         List<Post> posts = postService.getTopPostsList();
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jdbc:mysql://localhost:3306/blog");
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.createQuery("SELECT * FROM POSTS");
+        } finally {
+            em.close();
+        }
 
         return "[" + posts.stream().map(this::toJsonLink).collect(Collectors.joining(", \n")) + "]";
     }
@@ -129,6 +141,8 @@ public class PostsController {
         }
 
         postService.saveNewPost(post);
+
+        System.out.println("Post was successfully created!");
 
         return "redirect:/posts";
     }

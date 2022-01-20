@@ -3,6 +3,8 @@ package alexp.blog.controller;
 import alexp.blog.model.User;
 import alexp.blog.service.*;
 import alexp.blog.utils.JsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Level;
 
 @Controller
 public class UsersController {
@@ -30,6 +33,12 @@ public class UsersController {
 
     @Autowired
     private Validator userValidator;
+
+    private static java.util.logging.Logger julLogger = java.util.logging.Logger.getLogger("alexp.blog.controller.UserController");
+
+    private static Logger logger = LoggerFactory.getLogger(UsersController.class);
+
+
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String showRegistrationForm(ModelMap model, HttpServletRequest request, HttpSession session) {
@@ -191,6 +200,7 @@ public class UsersController {
 
             return makeAvatarUploadResponse("ok", result);
         } catch (UnsupportedFormatException e) {
+            julLogger.log(Level.WARNING, "invalid format");
             return makeAvatarUploadResponse("invalid_format", null);
         }
     }
@@ -211,6 +221,8 @@ public class UsersController {
             throw new ResourceNotFoundException();
 
         model.addAttribute("user", user);
+
+        logger.info("Profile shown");
 
         return "profile";
     }

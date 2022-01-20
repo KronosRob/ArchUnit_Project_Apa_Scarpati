@@ -16,5 +16,5 @@ public interface CommentService {
 
     void updateComment(Comment newCommentData, Long commentId) throws ActionExpiredException;
 
-    void vote(Long commentId, boolean like) throws AlreadyVotedException, ForbiddenException;
+    void vote(Long commentId, boolean like) throws AlreadyVotedException, ForbiddenException, Exception;
 }

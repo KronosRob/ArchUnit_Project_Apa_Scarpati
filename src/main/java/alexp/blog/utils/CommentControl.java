@@ -1,5 +1,7 @@
-package alexp.blog.controller;
+package alexp.blog.utils;
 
+import alexp.blog.controller.ForbiddenException;
+import alexp.blog.controller.ResourceNotFoundException;
 import alexp.blog.model.Comment;
 import alexp.blog.model.Post;
 import alexp.blog.service.*;
@@ -15,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class CommentController {
+public class CommentControl {
 
     @Autowired
     private PostService postService;
@@ -115,7 +117,7 @@ public class CommentController {
         } catch (AlreadyVotedException e) {
             return "already_voted";
         }
-        catch (ForbiddenException e) {
+        catch (Exception e) {
             return "own_comment";
         }
 
@@ -130,7 +132,7 @@ public class CommentController {
         } catch (AlreadyVotedException e) {
             return "already_voted";
         }
-        catch (ForbiddenException e) {
+        catch (Exception e) {
             return "own_comment";
         }
 

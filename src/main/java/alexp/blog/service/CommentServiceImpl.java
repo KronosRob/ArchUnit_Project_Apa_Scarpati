@@ -2,7 +2,7 @@ package alexp.blog.service;
 
 import alexp.blog.controller.ForbiddenException;
 import alexp.blog.model.*;
-import alexp.blog.repository.CommentRatingRepository;
+import alexp.blog.repository.CommentRatingRepo;
 import alexp.blog.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private CommentRatingRepository commentRatingRepository;
+    private CommentRatingRepo commentRatingRepository;
 
     private static final int MAX_COMMENT_LEVEL = 5;
 
@@ -90,13 +90,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void vote(Long commentId, boolean like) throws AlreadyVotedException, ForbiddenException {
+    public void vote(Long commentId, boolean like) throws AlreadyVotedException, ForbiddenException, Exception {
         User currentUser = userService.currentUser();
 
         Comment comment = getComment(commentId);
 
         if (currentUser.getId().longValue() == comment.getUser().getId().longValue()) {
-            throw new ForbiddenException("cannot vote for own comments");
+            throw new Exception("cannot vote for own comments");
         }
 
         CommentRating rating = commentRatingRepository.findUserRating(commentId, currentUser.getId());
